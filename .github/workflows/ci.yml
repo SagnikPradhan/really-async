@@ -37,9 +37,6 @@ jobs:
       - name: Prettier
         run: pnpm prettier --check .
 
-      - name: Changesets
-        run: changeset status --since=main
-
       - name: Package size
         uses: pkg-size/action@v1
         env:
