@@ -11,10 +11,8 @@ on:
 
 jobs:
   release:
-    if: "${{ !startsWith(github.event.head_commit.message, 'chore: release') }}"
-
     name: release
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -37,15 +35,11 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Create PR
+      - name: Create PR or Publish
         uses: changesets/action@v1
         with:
-          commit: "chore: release"
+          publish: pnpm publish
+          title: "chore: release"
         env:
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-
-      - name: Create release
-        run: pnpm publish
