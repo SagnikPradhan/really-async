@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  pull_request: null
+
+jobs:
+  release:
+    if: "${{ !startsWith(github.event.head_commit.message, 'chore: release') }}"
+
+    name: continous integration
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          check-latest: true
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Prettier
+        run: pnpm prettier --check .
+
+      - name: Changesets
+        run: changeset status --since=main
+
+      - name: Package size
+        uses: pkg-size/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          hide-files: "*.{map,ts}"
