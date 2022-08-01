@@ -36,11 +36,3 @@ jobs:
 
       - name: Prettier
         run: pnpm prettier --check .
-
-      - name: Package size
-        uses: pkg-size/action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          build-command: false
-          hide-files: "*.{map,ts}"
