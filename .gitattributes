@@ -1,0 +1,4 @@
+# This line does two things:
+# - forces git to use LF
+# - tell git to guess whether files are text or binary
+* text=auto eol=lf
