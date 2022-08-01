@@ -1,0 +1,5 @@
+coverage
+docs
+dist
+pnpm-lock.yaml
+README.md

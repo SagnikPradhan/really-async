@@ -1,6 +1,6 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+/** @type {import("ts-jest/dist/types").InitialOptionsTsJest} */
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "jsdom",
-  collectCoverage: true,
+	preset: "ts-jest",
+	testEnvironment: "jsdom",
+	collectCoverage: true,
 };
